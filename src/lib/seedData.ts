@@ -1,0 +1,150 @@
+import type { AppData } from '../types';
+import { DEFAULT_BUCKETS, getCurrentYear, getWeekNumber } from './constants';
+
+export function createSeedData(): AppData {
+  const year = getCurrentYear();
+  const week = getWeekNumber();
+
+  return {
+    buckets: [...DEFAULT_BUCKETS],
+    goals: [
+      {
+        id: 'goal-1',
+        bucketId: 'bkt-health',
+        year,
+        title: 'Run a Sub-2 Half Marathon',
+        description: 'Build endurance to complete a half marathon under 2 hours',
+        archetype: 'target_metric',
+        targetValue: 13,
+        currentValue: 8,
+        unit: 'miles',
+        status: 'active',
+        targetDate: `${year}-12-31`,
+      },
+      {
+        id: 'goal-2',
+        bucketId: 'bkt-finance',
+        year,
+        title: 'Reach $25k in Savings',
+        description: 'Aggressively save to build emergency fund and investment base',
+        archetype: 'target_metric',
+        targetValue: 25000,
+        currentValue: 16500,
+        unit: '$',
+        status: 'active',
+        targetDate: `${year}-12-31`,
+      },
+      {
+        id: 'goal-3',
+        bucketId: 'bkt-craft',
+        year,
+        title: 'Launch Personal Portfolio Site',
+        description: 'Design, build, and deploy a portfolio showcasing projects',
+        archetype: 'milestone_project',
+        targetValue: undefined,
+        currentValue: 0,
+        status: 'active',
+        targetDate: `${year}-06-30`,
+      },
+      {
+        id: 'goal-4',
+        bucketId: 'bkt-leisure',
+        year,
+        title: 'Read 24 Books',
+        description: 'Two books per month — mix of fiction and nonfiction',
+        archetype: 'target_metric',
+        targetValue: 24,
+        currentValue: 11,
+        unit: 'books',
+        status: 'active',
+        targetDate: `${year}-12-31`,
+      },
+    ],
+    milestones: [
+      {
+        id: 'ms-1',
+        yearlyGoalId: 'goal-1',
+        year,
+        month: getCurrentMonthOfYear(),
+        title: 'Hit 10-mile long run',
+        archetype: 'target_metric',
+        targetValue: 10,
+        currentValue: 8,
+        status: 'in_progress',
+      },
+      {
+        id: 'ms-2',
+        yearlyGoalId: 'goal-2',
+        year,
+        month: getCurrentMonthOfYear(),
+        title: 'Save $2,000 this month',
+        archetype: 'target_metric',
+        targetValue: 2000,
+        currentValue: 1200,
+        status: 'in_progress',
+      },
+      {
+        id: 'ms-3',
+        yearlyGoalId: 'goal-3',
+        year,
+        month: getCurrentMonthOfYear(),
+        title: 'Complete portfolio wireframes',
+        archetype: 'milestone_project',
+        status: 'completed',
+        currentValue: 0,
+      },
+      {
+        id: 'ms-4',
+        yearlyGoalId: 'goal-4',
+        year,
+        month: getCurrentMonthOfYear(),
+        title: 'Read 2 books',
+        archetype: 'target_metric',
+        targetValue: 2,
+        currentValue: 1,
+        status: 'in_progress',
+      },
+    ],
+    commitments: [
+      {
+        id: 'wc-1',
+        monthlyMilestoneId: 'ms-1',
+        year,
+        weekNumber: week,
+        title: 'Complete a 9-mile long run',
+        isCompleted: false,
+      },
+      {
+        id: 'wc-2',
+        monthlyMilestoneId: 'ms-2',
+        year,
+        weekNumber: week,
+        title: 'Transfer $600 to savings',
+        isCompleted: true,
+        completedAt: new Date().toISOString(),
+      },
+      {
+        id: 'wc-3',
+        monthlyMilestoneId: 'ms-3',
+        year,
+        weekNumber: week,
+        title: 'Draft homepage layout in Figma',
+        isCompleted: false,
+      },
+      {
+        id: 'wc-4',
+        monthlyMilestoneId: 'ms-4',
+        year,
+        weekNumber: week,
+        title: 'Finish current book',
+        isCompleted: false,
+        notes: 'On the last chapter',
+      },
+    ],
+    reviews: [],
+  };
+}
+
+function getCurrentMonthOfYear(): number {
+  return new Date().getMonth() + 1;
+}
